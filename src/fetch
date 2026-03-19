@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-readarray -t logo < /home/meow/code/ohfetch/dep/logo
+readarray -t logo <"$(dirname "$0")/../dep/logo"
 
 host=$(hostname)
 mem=$(free -h | awk '/^[Mm]em:/ {print $3" / "$2}' | tr -d 'i' 2>/dev/null || echo unknown)
@@ -12,19 +12,19 @@ wm=${XDG_SESSION_TYPE:-x11}
 cpu=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2 | sed 's/^ *//' | cut -d' ' -f1-4)
 gpu=$(lspci 2>/dev/null | grep -i 'vga\|display\|3d' | cut -d: -f3 | sed 's/^ *//' || echo unknown)
 
-for ((i=0; i<${#logo[@]} || i<10; i++)); do
-    printf "\033[36m%-50s\033[0m" "${logo[i]}"
-    case $i in
-        0) printf " \033[34mohlinux\033[0m\033[37m@\033[0m\033[34m%s\033[0m\n" "$host" ;;
-        1) printf " \033[33mos:\033[0m \033[37mohLinux\033[0m\n" ;;
-        2) printf " \033[33mkernel:\033[0m \033[37m%s\033[0m\n" "$kernel" ;;
-        3) printf " \033[33muptime:\033[0m \033[37m%s\033[0m\n" "$uptime" ;;
-        4) printf " \033[33mshell:\033[0m \033[37m%s\033[0m\n" "$shell" ;;
-        5) printf " \033[33mwm:\033[0m \033[37m%s\033[0m\n" "$wm" ;;
-        6) printf " \033[33mmemory:\033[0m \033[37m%s\033[0m\n" "$mem" ;;
-        7) printf " \033[33mterm:\033[0m \033[37m%s\033[0m\n" "$term" ;;
-        8) printf " \033[33mcpu:\033[0m \033[37m%s\033[0m\n" "$cpu" ;;
-        9) printf " \033[33mgpu:\033[0m \033[37m%s\033[0m\n" "$gpu" ;;
-        *) printf "\n" ;;
-    esac
+for ((i = 0; i < ${#logo[@]} || i < 10; i++)); do
+  printf "\033[36m%-50s\033[0m" "${logo[i]}"
+  case $i in
+  0) printf " \033[34mohlinux\033[0m\033[37m@\033[0m\033[34m%s\033[0m\n" "$host" ;;
+  1) printf " \033[33mos:\033[0m \033[37mohLinux\033[0m\n" ;;
+  2) printf " \033[33mkernel:\033[0m \033[37m%s\033[0m\n" "$kernel" ;;
+  3) printf " \033[33muptime:\033[0m \033[37m%s\033[0m\n" "$uptime" ;;
+  4) printf " \033[33mshell:\033[0m \033[37m%s\033[0m\n" "$shell" ;;
+  5) printf " \033[33mwm:\033[0m \033[37m%s\033[0m\n" "$wm" ;;
+  6) printf " \033[33mmemory:\033[0m \033[37m%s\033[0m\n" "$mem" ;;
+  7) printf " \033[33mterm:\033[0m \033[37m%s\033[0m\n" "$term" ;;
+  8) printf " \033[33mcpu:\033[0m \033[37m%s\033[0m\n" "$cpu" ;;
+  9) printf " \033[33mgpu:\033[0m \033[37m%s\033[0m\n" "$gpu" ;;
+  *) printf "\n" ;;
+  esac
 done
